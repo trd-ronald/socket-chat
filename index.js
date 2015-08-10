@@ -7,8 +7,12 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
+	var socketId = socket.id
+    var clientIp = socket.request.connection.remoteAddress
+    console.log(clientIp);
+  
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    io.emit('chat message', {message: msg, sender: clientIp});
   });
 });
 
